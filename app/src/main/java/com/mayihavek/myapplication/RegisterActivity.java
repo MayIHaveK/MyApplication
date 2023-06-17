@@ -1,20 +1,23 @@
 package com.mayihavek.myapplication;
 
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.widget.SwitchCompat;
 
 import android.app.Dialog;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ImageView;
 
+import com.mayihavek.base.BaseAppCompatActivity;
 import com.mayihavek.myapplication.task.RegisterTask;
 import com.mayihavek.myapplication.utils.Code;
 import com.mayihavek.myapplication.utils.LogUtils;
+import com.mayihavek.myapplication.utils.StringUtils;
 
-public class RegisterActivity extends AppCompatActivity {
+public class RegisterActivity extends BaseAppCompatActivity {
 
     public EditText editTextRegister;
     public EditText editTextRegisterPassword;
@@ -28,6 +31,7 @@ public class RegisterActivity extends AppCompatActivity {
 
 
     @Override
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
@@ -60,6 +64,13 @@ public class RegisterActivity extends AppCompatActivity {
         if (registerAccount.equals("") || registerPasswordOne.equals("") || registerPasswordTwo.equals("")) {
             return;
         }
+
+        //自定义密码规则,8~16位数字和字母组成
+        if(!StringUtils.isPasswordForm(registerPasswordOne)){
+            LogUtils.showFailureDialog("密码要求同时包含数字和字母且在8~32位",this);
+            return;
+        }
+
 
         //生成加载动画
         dialog.show();

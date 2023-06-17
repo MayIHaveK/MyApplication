@@ -48,7 +48,7 @@
         <item name="android:windowFullscreen">true</item>
     </style>
 
-    <!-- my loading dialog -->
+    <!-- loading dialog 的样式-->
     <style name="MyDialogStyle">
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:windowFrame">@null</item>
@@ -58,6 +58,21 @@
         <item name="android:windowContentOverlay">@null</item>
         <item name="android:windowAnimationStyle">@android:style/Animation.Dialog</item>
         <item name="android:backgroundDimEnabled">true</item>
+    </style>
+
+    <!--  启动页面 -->
+    <style name="MyOpenImage" parent="Theme.MaterialComponents.DayNight.NoActionBar.Bridge">
+        <!-- 可以设置成纯颜色（设置一个和Activity UI相似的背景） -->
+        <!--        <item name="android:windowBackground">@color/startingwindow_bgcolor</item>-->
+        <!--也可以设置成一张图片 -->
+        <item name="android:windowBackground">@drawable/openbg</item>
+    </style>
+
+    <!-- NavigationView的菜单项的文本样式 -->
+    <style name="nav_drawer_menu_text_style">
+        <item name="android:textColor">@color/nav_drawer_menu_text_color</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:padding">5dp</item>
     </style>
 
 </resources>

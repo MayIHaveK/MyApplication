@@ -1,9 +1,14 @@
 package com.mayihavek.myapplication.task;
 
+
+import android.annotation.SuppressLint;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 
+import com.mayihavek.myapplication.LoginSuccessful;
 import com.mayihavek.myapplication.MainActivity;
-import com.mayihavek.myapplication.R;
+import com.mayihavek.myapplication.RegisterActivity;
 import com.mayihavek.myapplication.dao.UserDao;
 import com.mayihavek.myapplication.utils.LogUtils;
 
@@ -26,6 +31,7 @@ public class LoginTask extends AsyncTask<String,Void,Boolean> {
     }
 
     //用于数据处理的线程
+    @SuppressLint("CommitPrefEdits")
     @Override
     protected Boolean doInBackground(String... params) {
         //获取传递过来的 参数 account , password
@@ -33,10 +39,24 @@ public class LoginTask extends AsyncTask<String,Void,Boolean> {
         String password = params[1];
         try {
             hasUserAccount = UserDao.hasUserAccount(account);
-            return UserDao.login(account, password);
+
+            boolean login = UserDao.login(account, password);
+            if(login) {
+                MainActivity activity = mainActivity.get();
+                //读取和写入数据
+                SharedPreferences preferences = activity.preferences;
+                if(preferences.getBoolean("remember_password",false)) {
+                    SharedPreferences.Editor edit = preferences.edit();
+                    edit.putString("user_account", account);
+                    edit.putString("user_password", password);
+                    edit.apply();
+                }
+                return true;
+            }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+        return false;
     }
 
 
@@ -47,11 +67,15 @@ public class LoginTask extends AsyncTask<String,Void,Boolean> {
         LogUtils.closeDialog(activity.dialog);
         if(!hasUserAccount){
             LogUtils.showFailureDialog("该用户不存在", activity);
-        }else if(login){
-            activity.setContentView(R.layout.activity_login_successful);
-        }else {
-            LogUtils.showFailureDialog("用户名或密码错误！",activity);
+            return;
         }
+        if(login){
+            Intent intent = new Intent();
+            intent.setClass(activity, LoginSuccessful.class);
+            activity.startActivity(intent);
+            return;
+        }
+        LogUtils.showFailureDialog("用户名或密码错误！",activity);
     }
 
 }

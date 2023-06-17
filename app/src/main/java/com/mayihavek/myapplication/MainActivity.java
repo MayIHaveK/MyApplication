@@ -1,26 +1,40 @@
 package com.mayihavek.myapplication;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.View;
+import android.view.WindowManager;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 
+import com.mayihavek.base.BaseAppCompatActivity;
 import com.mayihavek.myapplication.task.LoginTask;
 import com.mayihavek.myapplication.utils.LogUtils;
 
 import java.sql.SQLException;
 
+import cn.pedant.SweetAlert.SweetAlertDialog;
 
-public class MainActivity extends AppCompatActivity {
+
+public class MainActivity extends BaseAppCompatActivity {
 
     private EditText userAccount;
     private EditText userPassword;
     public Dialog dialog;
 
+    public SharedPreferences preferences;  //利用SharedPreferences 进行数据存储
+    private CheckBox remember;  //定义记住密码
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,10 +42,24 @@ public class MainActivity extends AppCompatActivity {
         init();
     }
 
+
     public void init(){
         userAccount = (EditText) findViewById(R.id.editTextText);
         userPassword = (EditText) findViewById(R.id.editTextTextPassword);
         dialog = LogUtils.createLoadingDialog(MainActivity.this, "加载中");
+        preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        remember = (CheckBox) findViewById(R.id.remember_password);
+
+        //remember_password 作为 是否开启存储密码数据的 key
+        boolean isRemember = preferences.getBoolean("remember_password",false);
+        if (isRemember){
+            //设置账号和密码
+            userAccount.setText(preferences.getString("user_account",""));
+            userPassword.setText(preferences.getString("user_password",""));
+            //设置勾选
+            remember.setChecked(true);
+        }
+
     }
 
 
@@ -45,6 +73,11 @@ public class MainActivity extends AppCompatActivity {
             LogUtils.closeDialog(dialog);
             return;
         }
+
+        //登录的时候存入选择框的内容,设置是否记住密码
+        SharedPreferences.Editor edit = preferences.edit();
+        edit.putBoolean("remember_password",remember.isChecked());
+        edit.apply();
 
         //开启一个加载图标
         dialog.show();
