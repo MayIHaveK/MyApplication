@@ -1,2 +1,2 @@
 # MyApplication
-用于参加校内比赛的 Android 程序
+用于练手的 Android 程序
