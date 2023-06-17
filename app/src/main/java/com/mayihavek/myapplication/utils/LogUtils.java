@@ -13,16 +13,15 @@ import android.widget.TextView;
 
 import com.mayihavek.myapplication.R;
 
+import cn.pedant.SweetAlert.SweetAlertDialog;
+
 public class LogUtils {
 
     public static void showFailureDialog(String str , Context context){
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        builder.setTitle("Database Connection");
-        builder.setMessage(str);
-        builder.setPositiveButton("false", null);
-        AlertDialog dialog = builder.create();
-        dialog.show();
+        new SweetAlertDialog(context, SweetAlertDialog.ERROR_TYPE)
+                .setTitleText("警告")
+                .setContentText(str)
+                .show();
     }
 
     public static Dialog createLoadingDialog(Context context, String msg) {
