@@ -39,9 +39,10 @@ public class LogUtils {
         loadingDialog.setContentView(layout, new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.MATCH_PARENT));// 设置布局
-        /**
-         *将显示Dialog的方法封装在这里面
-         */
+        return loadingDialog;
+    }
+
+    public static Dialog showLoadingDialog(Dialog loadingDialog){
         Window window = loadingDialog.getWindow();
         WindowManager.LayoutParams lp = window.getAttributes();
         lp.width = WindowManager.LayoutParams.MATCH_PARENT;
@@ -50,7 +51,6 @@ public class LogUtils {
         window.setAttributes(lp);
         window.setWindowAnimations(R.style.PopWindowAnimStyle);
         loadingDialog.show();
-
         return loadingDialog;
     }
 

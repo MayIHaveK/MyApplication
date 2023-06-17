@@ -7,11 +7,23 @@ import com.mayihavek.myapplication.R;
 import com.mayihavek.myapplication.dao.UserDao;
 import com.mayihavek.myapplication.utils.LogUtils;
 
+import java.lang.ref.WeakReference;
 import java.sql.SQLException;
 
+/**
+ *  用于处理登录任务
+ */
 public class LoginTask extends AsyncTask<String,Void,Boolean> {
 
     private boolean hasUserAccount;
+    /**
+     * 静态内部类+弱引用 来解决传入 mainActivity 存为变量后的内存泄漏问题
+     */
+    private final WeakReference<MainActivity> mainActivity;
+
+    public LoginTask(MainActivity mainActivity){
+        this.mainActivity = new WeakReference<>(mainActivity);
+    }
 
     //用于数据处理的线程
     @Override
@@ -31,7 +43,8 @@ public class LoginTask extends AsyncTask<String,Void,Boolean> {
     //渲染 UI 的线程
     @Override
     protected void onPostExecute(Boolean login) {
-        MainActivity activity = MainActivity.mainActivity;
+        MainActivity activity = mainActivity.get();
+        LogUtils.closeDialog(activity.dialog);
         if(!hasUserAccount){
             LogUtils.showFailureDialog("该用户不存在", activity);
         }else if(login){
