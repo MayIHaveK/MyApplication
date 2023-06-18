@@ -11,7 +11,7 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ImageView;
 
-import com.mayihavek.base.BaseAppCompatActivity;
+import com.mayihavek.myapplication.base.BaseAppCompatActivity;
 import com.mayihavek.myapplication.task.RegisterTask;
 import com.mayihavek.myapplication.utils.Code;
 import com.mayihavek.myapplication.utils.LogUtils;
