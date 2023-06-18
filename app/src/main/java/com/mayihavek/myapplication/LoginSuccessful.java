@@ -6,16 +6,22 @@ import android.os.Bundle;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.MotionEvent;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
-import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.navigation.NavigationView;
-import com.mayihavek.base.BaseAppCompatActivity;
+import com.mayihavek.myapplication.base.BaseAppCompatActivity;
+import com.mayihavek.myapplication.entity.Message;
 import com.mayihavek.myapplication.utils.LogUtils;
+import com.mayihavek.myapplication.utils.MessageAdapter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class LoginSuccessful extends BaseAppCompatActivity {
@@ -27,6 +33,13 @@ public class LoginSuccessful extends BaseAppCompatActivity {
     //导航视图
     private NavigationView mNavigationView;
 
+    /**
+     * 信息显示
+     */
+    private RecyclerView recyclerView;
+    private MessageAdapter messageAdapter;
+    private List<Message> messageList;
+
     @Override
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +48,6 @@ public class LoginSuccessful extends BaseAppCompatActivity {
 
         initViews();
         initEvents();
-        mDrawerLayout.openDrawer(Gravity.LEFT);
     }
 
     /**
@@ -45,6 +57,25 @@ public class LoginSuccessful extends BaseAppCompatActivity {
         // 侧滑视图
         mDrawerLayout = findViewById(R.id.drawerLayout);
         mNavigationView = findViewById(R.id.nav_view);
+
+
+        // 初始化消息数据
+        messageList = new ArrayList<>();
+        messageList.add(new Message("小明", "你好，今天有空吗？"));
+        messageList.add(new Message("小红", "嗨，有什么事？"));
+        messageList.add(new Message("小明", "我们可以一起出去玩吗？"));
+        messageList.add(new Message("小红", "好的，什么时候？"));
+        messageList.add(new Message("小明", "下周六怎么样？"));
+        messageList.add(new Message("小明", "下周六怎么样？"));
+        messageList.add(new Message("小明", "下周六怎么样？"));
+        messageList.add(new Message("小明", "下周六怎么样？"));
+
+        // 初始化RecyclerView
+        recyclerView = findViewById(R.id.recyclerView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        messageAdapter = new MessageAdapter(messageList);
+        recyclerView.setAdapter(messageAdapter);
+
 
     }
 
