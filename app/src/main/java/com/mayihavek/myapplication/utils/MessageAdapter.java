@@ -1,5 +1,6 @@
 package com.mayihavek.myapplication.utils;
 
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +10,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.mayihavek.myapplication.CreateActivity;
+import com.mayihavek.myapplication.LoginSuccessful;
 import com.mayihavek.myapplication.R;
 import com.mayihavek.myapplication.entity.Message;
 
@@ -41,7 +44,18 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
             @Override
             public void onClick(View v) {
                 // 处理点击事件
-                Toast.makeText(v.getContext(), "点击了消息：" + message.getMessage(), Toast.LENGTH_SHORT).show();
+                //Toast.makeText(v.getContext(), "点击了消息：" + message.getMessage(), Toast.LENGTH_SHORT).show();
+                //跳转到编辑页面
+                CreateActivity.title = message.getSender();
+                CreateActivity.t_id = message.getId();
+                CreateActivity.text = message.getMessage();
+                CreateActivity.isEdit = true;
+                //打开编辑页面
+                LoginSuccessful successful = LoginSuccessful.loginSuccessful.get();
+                Intent intent = new Intent();
+                intent.setClass(successful, CreateActivity.class);
+                successful.startActivity(intent);
+
             }
         });
 

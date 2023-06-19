@@ -19,7 +19,10 @@
         android:layout_width="wrap_content"
         android:layout_height="30dp"
         android:layout_marginTop="8dp"
-        android:textSize="14sp" />
+        android:textSize="14sp"
+        android:singleLine="true"
+        android:ellipsize="end"
+        />
 
 
 </LinearLayout>
