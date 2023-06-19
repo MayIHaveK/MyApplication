@@ -4,27 +4,29 @@
         <item
             android:id="@+id/menu_info"
             android:icon="@mipmap/ic_launcher"
-            android:title="个人信息"/>
+            android:title="应用信息"/>
 
         <item
-            android:id="@+id/menu_pwd"
+            android:id="@+id/menu_thank"
             android:icon="@mipmap/ic_launcher"
-            android:title="修改密码"/>
+            android:title="感谢使用"/>
+
+
     </group>
     <group android:id="@+id/group1">
         <item
             android:id="@+id/menu_setting"
             android:icon="@mipmap/ic_launcher"
-            android:title="设置"/>
+            android:title="清除数据"/>
+
+        <item
+            android:id="@+id/menu_exit"
+            android:icon="@mipmap/ic_launcher"
+            android:title="退出登录"/>
 
         <item
             android:id="@+id/menu_about"
             android:icon="@mipmap/ic_launcher"
             android:title="关于"/>
-
-        <item
-            android:id="@+id/menu_exit"
-            android:icon="@mipmap/ic_launcher"
-            android:title="退出"/>
     </group>
 </menu>

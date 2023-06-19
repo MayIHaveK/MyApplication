@@ -12,6 +12,11 @@
         <item name="colorControlActivated">@color/black</item>
     </style>
 
+    <style name="MyEditText2" parent="Theme.AppCompat.Light">
+        <item name="colorControlNormal">@color/material_blue_grey_80</item>
+        <item name="colorControlActivated">@color/black</item>
+    </style>
+
     <style name="progressDialog" parent="@android:style/Theme.Dialog">
         <item name="android:windowFrame">@null</item>
         <item name="android:windowIsFloating">true</item>
